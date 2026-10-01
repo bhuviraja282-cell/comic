@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101916">
+  <meta name="description" content="Turn your next story idea into a beautifully illustrated comic with ComicCraft.">
+  <title>ComicCraft | AI Comic Story Creator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,500;9..144,600;9..144,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="ComicCraft home">
+        <span class="brand-mark"><i data-lucide="book-open-text"></i></span>
+        <span class="brand-name">comic<span>craft</span></span>
+      </a>
+      <div class="topbar-center"><span class="live-dot"></span><span id="provider-status">ADD GEMINI KEY</span></div>
+      <button class="top-export" id="download-button" type="button" disabled><i data-lucide="download"></i><span>Export comic</span></button>
+    </header>
+
+    <main class="workspace">
+      <aside class="creator-panel glass-panel">
+        <div class="panel-heading">
+          <div class="eyebrow"><span class="step-number">01</span> THE STORY ENGINE</div>
+          <h1>Dream it.<br><span>Drawn.</span></h1>
+          <p>Turn a tiny idea into a whole new world.</p>
+        </div>
+
+        <form id="comic-form">
+          <label class="field-label" for="story-prompt">Your story idea <span class="optional">REQUIRED</span></label>
+          <textarea id="story-prompt" name="prompt" maxlength="1000" required placeholder="A lighthouse keeper discovers a message from a city beneath the sea."></textarea>
+          <div class="field-bottom"><span>Start anywhere. Magic helps.</span><span id="character-count">0 / 1000</span></div>
+
+          <div class="field-grid">
+            <div class="field-group">
+              <label class="field-label" for="character-name">Your hero</label>
+              <input id="character-name" name="character" maxlength="60" placeholder="Name your hero">
+            </div>
+            <div class="field-group">
+              <label class="field-label" for="story-setting">Setting</label>
+              <input id="story-setting" name="setting" maxlength="100" placeholder="Where to?">
+            </div>
+          </div>
+
+          <fieldset class="option-fieldset">
+            <legend class="field-label">Pick a mood</legend>
+            <div class="choice-row tone-choices" role="group" aria-label="Story tone">
+              <button class="choice is-selected" type="button" data-tone="Adventurous"><i data-lucide="compass"></i> Adventure</button>
+              <button class="choice" type="button" data-tone="Funny"><i data-lucide="laugh"></i> Funny</button>
+              <button class="choice" type="button" data-tone="Dreamy"><i data-lucide="moon-star"></i> Dreamy</button>
+            </div>
+          </fieldset>
+
+          <div class="select-group">
+            <label class="field-label" for="art-style">Illustration style</label>
+            <div class="select-wrap"><i data-lucide="palette"></i><select id="art-style" name="style"><option>Storybook</option><option>Comic book</option><option>Anime</option><option>Watercolor</option><option>Pixel art</option></select><i class="select-chevron" data-lucide="chevron-down"></i></div>
+          </div>
+
+          <button class="generate-button" type="submit"><i data-lucide="sparkles"></i><span>Make my comic</span><i class="button-arrow" data-lucide="arrow-up-right"></i></button>
+          <div class="engine-note"><i data-lucide="wand-sparkles"></i><span id="engine-note-text">Gemini turns your prompt into a comic.</span></div>
+        </form>
+
+        <div class="creator-footer"><span class="avatar-stack"><span>✦</span><span>✎</span><span>☺</span></span><span>Made for the stories in your head.</span></div>
+      </aside>
+
+      <section class="preview-area" aria-labelledby="preview-heading">
+        <div class="preview-header">
+          <div><div class="eyebrow"><span class="step-number">02</span> THE COMIC CANVAS</div><h2 id="preview-heading">Your story, <em>in panels.</em></h2></div>
+          <div class="canvas-actions"><span class="panel-count" id="panel-count">0 PANELS</span><button class="icon-button" id="refresh-button" type="button" aria-label="Clear preview" title="Clear preview"><i data-lucide="eraser"></i></button></div>
+        </div>
+
+        <div class="comic-sheet" id="comic-sheet" aria-live="polite">
+          <div class="sheet-topline"><span id="comic-title">A STORY WAITING TO BE TOLD</span><span id="comic-edition">A COMICCRAFT ORIGINAL <span>✳</span></span></div>
+          <div class="panel-grid is-empty" id="panel-grid"></div>
+          <div class="sheet-footer"><span><i data-lucide="sparkle"></i> A new world, made just for you</span><span>STORY NO. <b>001</b></span></div>
+        </div>
+        <div class="canvas-caption"><span><i data-lucide="mouse-pointer-2"></i> Every comic begins with your idea.</span><span id="canvas-mode">READY WHEN YOU ARE</span></div>
+      </section>
+    </main>
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  </div>
+  <script src="https://unpkg.com/lucide@latest"></script>
+  <script src="/static/app.js" defer></script>
+</body>
+</html>
