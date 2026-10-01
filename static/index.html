@@ -30,8 +30,18 @@
           <p>Turn a tiny idea into a whole new world.</p>
         </div>
 
-        <form id="comic-form">
-          <label class="field-label" for="story-prompt">Your story idea <span class="optional">REQUIRED</span></label>
+        <form id="comic-form" class="story-form">
+          <div class="field-label-inline">
+            <label class="field-label" for="story-prompt">Your story idea <span class="optional">REQUIRED</span></label>
+            <span class="mini-status">AI-ready</span>
+          </div>
+
+          <div class="prompt-picks" aria-label="Suggested story starters">
+            <button type="button" class="chip is-selected" data-prompt="A lighthouse keeper discovers a message from a city beneath the sea.">Lighthouse mystery</button>
+            <button type="button" class="chip" data-prompt="A shy inventor builds a tiny flying machine to save a neighborhood festival.">Sky festival</button>
+            <button type="button" class="chip" data-prompt="A fox on a moonlit train learns that home is found in the people who wait for you.">Moonlit train</button>
+          </div>
+
           <textarea id="story-prompt" name="prompt" maxlength="1000" required placeholder="A lighthouse keeper discovers a message from a city beneath the sea."></textarea>
           <div class="field-bottom"><span>Start anywhere. Magic helps.</span><span id="character-count">0 / 1000</span></div>
 

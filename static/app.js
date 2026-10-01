@@ -11,6 +11,21 @@ function icons() {
   window.lucide?.createIcons();
 }
 
+function setLoadingState(isLoading) {
+  const button = form.querySelector(".generate-button");
+  const buttonText = button.querySelector("span");
+  button.disabled = isLoading;
+  form.classList.toggle("is-loading", isLoading);
+  buttonText.textContent = isLoading ? "Building your story..." : "Make my comic";
+  icons();
+}
+
+function applyPromptPreset(promptText) {
+  promptField.value = promptText.trim();
+  countLabel.textContent = `${promptField.value.length} / 1000`;
+  promptField.focus();
+}
+
 function renderComic(comic, mode = "AI-GENERATED COMIC") {
   currentComic = comic;
   grid.classList.remove("is-empty");
@@ -81,8 +96,6 @@ function notify(message) {
 
 form.addEventListener("submit", async (event) => {
   event.preventDefault();
-  const button = form.querySelector(".generate-button");
-  const buttonText = button.querySelector("span");
   const fields = {
     prompt: promptField.value.trim(),
     character: form.elements.character.value,
@@ -96,8 +109,7 @@ form.addEventListener("submit", async (event) => {
     return;
   }
 
-  button.disabled = true;
-  buttonText.textContent = "Building your story...";
+  setLoadingState(true);
   try {
     const response = await fetch("/api/generate", {
       method: "POST",
@@ -115,8 +127,7 @@ form.addEventListener("submit", async (event) => {
   } catch (error) {
     notify(error.message || "Could not reach ComicCraft. Check that the server is running.");
   } finally {
-    button.disabled = false;
-    buttonText.textContent = "Make my comic";
+    setLoadingState(false);
     icons();
   }
 });
@@ -131,8 +142,18 @@ document.querySelectorAll(".tone-choices .choice").forEach((button) => {
   });
 });
 
+document.querySelectorAll(".chip").forEach((chip) => {
+  chip.addEventListener("click", () => {
+    document.querySelectorAll(".chip").forEach((btn) => btn.classList.toggle("is-selected", btn === chip));
+    applyPromptPreset(chip.dataset.prompt);
+  });
+});
+
 promptField.addEventListener("input", () => {
   countLabel.textContent = `${promptField.value.length} / 1000`;
+  document.querySelectorAll(".chip").forEach((chip) => {
+    chip.classList.toggle("is-selected", chip.dataset.prompt.trim() === promptField.value.trim());
+  });
 });
 
 document.querySelector("#refresh-button").addEventListener("click", () => {
